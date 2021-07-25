@@ -33,9 +33,9 @@ void generatePass(int buttonToCheck)
     else
       passToCheck[i] = correctPass[i];
   } 
+
+
 }
-
-
 
 void loop() {
   if (digitalRead(greenLed) != HIGH)
@@ -78,4 +78,43 @@ void loop() {
       }
     }
   }
+}
+
+void printPass()
+{
+  Serial.println();
+  Serial.println("Password found!!");
+  Serial.println("The password is: ");
+  for(int i = 0; i < 5; i++)
+  {
+    Serial.print(numButton(passToCheck[i]));
+    if(i != 4)
+      Serial.print(" ,");
+  }
+}
+int numButton(int x)
+{
+  for(int i = 0; i <= 5; i++)
+  {
+    if(buttons[i] == x)
+      return i;
+  }
+  return -1;
+}
+void enterPass(int* pass)
+{
+  delay(100);
+  for (int i = 0 ; i < 5 ; i++)
+  {
+    pressButton(*(pass + i));
+  }
+}
+
+
+void pressButton(int button)
+{
+  digitalWrite(button, HIGH);
+  delay(10);
+  digitalWrite(button, LOW);
+  delay(50);
 }
